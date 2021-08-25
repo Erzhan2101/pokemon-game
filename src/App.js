@@ -1,15 +1,15 @@
-import PokemonGame from "./PokemonGame";
+// import PokemonGame from "./PokemonGame";
 import Menu from "./Menu";
 import {BrowserRouter, Route} from "react-router-dom";
-
+import FoodDescription from "./food-description";
 
 function App() {
     return (
         <div>
-          {/*<PokemonGame />*/}
+            {/*<PokemonGame />*/}
             <BrowserRouter>
-
-                <Route ><Menu /></Route>
+                <Route exact path='/meals'><Menu/></Route>
+                <Route path='/meal/:id'><FoodDescription/></Route>
             </BrowserRouter>
 
         </div>
