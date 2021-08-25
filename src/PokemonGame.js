@@ -6,6 +6,9 @@ const PokemonGame = () => {
     const [goal, setGoal] = useState({})
     const [answers, setAnswers] = useState([])
     const [message, setMessage] = useState('')
+    const [freeAttempt, setFreeAttempt] = useState(10)
+    const [score, setScore] = useState(0)
+
 
     useEffect(() => {
         axios("https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json")
@@ -23,31 +26,43 @@ const PokemonGame = () => {
         setAnswers(number.map(num => {
             return pokemons.find(poke => poke.id === num)
         }))
+        setFreeAttempt(10)
+
     }
 
     const comparePassword = (id) => {
         if (id === goal.id) {
             setMessage('угадал')
-        }else if(id !== goal){
+            startBtn()
+            setScore(score + 1)
+        } else if (id !== goal) {
             setMessage("не угадал")
+            startBtn()
         }
+        setFreeAttempt(freeAttempt - 1)
     }
 
     return (
-        <div>
-            <button onClick={startBtn}>Start</button>
+        <div className='pokemon'>
+            <button className='startBtn' onClick={startBtn}>Start</button>
             <div>
-                <img src={goal.img} alt=""/>
-            </div >
-            <div className='random-btn'>
+                <div>
+                    <img className='img' src={goal?.img} alt=""/>
+                </div>
                 {
-                    answers.map(el => (
-                        <button onClick={() => comparePassword(el.id)}>{el.name}</button>
-                    ))
+                    Boolean(freeAttempt) &&
+                    <p>У вас осталось {freeAttempt} {freeAttempt === 1 ? "попытки" : "попытки"}</p>
                 }
+                <div>
+                    {
+                        answers.map(el => (
+                            <button onClick={() => comparePassword(el.id)} key={el?.id}>{el?.name}</button>
+                        ))
+                    }
+                </div>
+                <div>{message}</div>
+                <div>Score: {score}</div>
             </div>
-
-            <div>{message}</div>
         </div>
     )
 }
