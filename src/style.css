@@ -9,10 +9,21 @@
 }
 .pokemon{
     text-align: center;
-    background: #000 url("109332.jpg") no-repeat center/cover;
+    background: #0003 url("109332.jpg") no-repeat center/cover;
     height: 100vh;
 }
 
-img{
+.menu{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
 
+img{
+    height: 250px;
+    width: 300px;
+    object-fit: fill;
+}
+
+.menu-desc{
+    padding: 20px;
 }
